@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Lucky Ape mark. Keep in sync with src/components/Logo.tsx; app icons are rendered from this file. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
+  <path d="M78 14 C101 16 114 36 108 60 C106 46 96 33 76 28 Z" fill="#FBBF24" stroke="#B45309" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M76 28 L72 23" stroke="#78350F" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="15" cy="64" r="15" fill="#7C4A21"/>
+  <circle cx="15" cy="64" r="8.5" fill="#E9B98C"/>
+  <circle cx="105" cy="64" r="15" fill="#7C4A21"/>
+  <circle cx="105" cy="64" r="8.5" fill="#E9B98C"/>
+  <circle cx="60" cy="62" r="44" fill="#7C4A21"/>
+  <ellipse cx="60" cy="72" rx="31" ry="28" fill="#F2CBA2"/>
+  <path d="M32 56 C32 44 46 40 60 50 C74 40 88 44 88 56 C88 66 74 70 60 62 C46 70 32 66 32 56 Z" fill="#F2CBA2"/>
+  <circle cx="47" cy="59" r="5.5" fill="#0F172A"/>
+  <circle cx="73" cy="59" r="5.5" fill="#0F172A"/>
+  <circle cx="49" cy="57" r="1.8" fill="#FFFFFF"/>
+  <circle cx="75" cy="57" r="1.8" fill="#FFFFFF"/>
+  <circle cx="54.5" cy="76" r="2" fill="#7C4A21"/>
+  <circle cx="65.5" cy="76" r="2" fill="#7C4A21"/>
+  <path d="M46 86 Q60 98 74 86" stroke="#7C4A21" stroke-width="3" stroke-linecap="round" fill="none"/>
+</svg>

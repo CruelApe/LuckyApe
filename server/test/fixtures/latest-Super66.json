@@ -1,0 +1,47 @@
+{
+  "Success": true,
+  "DrawResults": [
+    {
+      "ProductId": "Super66",
+      "DrawNumber": 4721,
+      "DrawDate": "2026-10-17T00:00:00",
+      "PrimaryNumbers": [
+        9,
+        0,
+        0,
+        5,
+        9,
+        0
+      ],
+      "SecondaryNumbers": []
+    },
+    {
+      "ProductId": "Super66",
+      "DrawNumber": 4719,
+      "DrawDate": "2026-10-10T00:00:00",
+      "PrimaryNumbers": [
+        2,
+        9,
+        5,
+        9,
+        3,
+        0
+      ],
+      "SecondaryNumbers": []
+    },
+    {
+      "ProductId": "Super66",
+      "DrawNumber": 4717,
+      "DrawDate": "2026-10-03T00:00:00",
+      "PrimaryNumbers": [
+        0,
+        3,
+        7,
+        4,
+        7,
+        1
+      ],
+      "SecondaryNumbers": []
+    }
+  ]
+}

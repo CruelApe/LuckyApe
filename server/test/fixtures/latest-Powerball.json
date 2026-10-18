@@ -1,0 +1,56 @@
+{
+  "Success": true,
+  "DrawResults": [
+    {
+      "ProductId": "Powerball",
+      "DrawNumber": 1587,
+      "DrawDate": "2026-10-15T00:00:00",
+      "PrimaryNumbers": [
+        14,
+        24,
+        15,
+        3,
+        27,
+        32,
+        30
+      ],
+      "SecondaryNumbers": [
+        16
+      ]
+    },
+    {
+      "ProductId": "Powerball",
+      "DrawNumber": 1586,
+      "DrawDate": "2026-10-08T00:00:00",
+      "PrimaryNumbers": [
+        20,
+        15,
+        7,
+        8,
+        10,
+        19,
+        12
+      ],
+      "SecondaryNumbers": [
+        7
+      ]
+    },
+    {
+      "ProductId": "Powerball",
+      "DrawNumber": 1585,
+      "DrawDate": "2026-10-01T00:00:00",
+      "PrimaryNumbers": [
+        16,
+        3,
+        10,
+        24,
+        2,
+        11,
+        6
+      ],
+      "SecondaryNumbers": [
+        14
+      ]
+    }
+  ]
+}

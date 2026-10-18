@@ -1,0 +1,44 @@
+{
+  "Success": true,
+  "DrawResults": [
+    {
+      "ProductId": "LuckyLotteries5",
+      "DrawNumber": 1789,
+      "DrawDate": "2026-09-24T00:00:00",
+      "PrimaryNumbers": [
+        83612
+      ],
+      "SecondaryNumbers": [
+        172470,
+        52761,
+        186000
+      ]
+    },
+    {
+      "ProductId": "LuckyLotteries5",
+      "DrawNumber": 1788,
+      "DrawDate": "2026-08-27T00:00:00",
+      "PrimaryNumbers": [
+        89561
+      ],
+      "SecondaryNumbers": [
+        100164,
+        197144,
+        183100
+      ]
+    },
+    {
+      "ProductId": "LuckyLotteries5",
+      "DrawNumber": 1787,
+      "DrawDate": "2026-07-30T00:00:00",
+      "PrimaryNumbers": [
+        5269
+      ],
+      "SecondaryNumbers": [
+        116089,
+        129336,
+        95826
+      ]
+    }
+  ]
+}

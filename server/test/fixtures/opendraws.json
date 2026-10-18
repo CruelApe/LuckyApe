@@ -1,0 +1,166 @@
+{
+  "Success": true,
+  "ErrorInfo": null,
+  "Draws": [
+    {
+      "ProductId": "MondayWednesdayFridayLotto",
+      "DrawNumber": 4770,
+      "DrawDate": "2026-10-19T00:00:00",
+      "Div1Amount": 1000000.0,
+      "IsDiv1Unknown": false,
+      "DaysOfWeek": "Monday"
+    },
+    {
+      "ProductId": "OzLotto",
+      "DrawNumber": 1705,
+      "DrawDate": "2026-10-20T00:00:00",
+      "Div1Amount": 40000000.0,
+      "IsDiv1Unknown": false,
+      "DaysOfWeek": "Tuesday"
+    },
+    {
+      "ProductId": "LuckyLotteries2",
+      "DrawNumber": 11112,
+      "DrawDate": "2026-10-21T00:00:00",
+      "Div1Amount": 500000.0,
+      "IsDiv1Unknown": false,
+      "DaysOfWeek": "None"
+    },
+    {
+      "ProductId": "MondayWednesdayFridayLotto",
+      "DrawNumber": 4771,
+      "DrawDate": "2026-10-21T00:00:00",
+      "Div1Amount": 1000000.0,
+      "IsDiv1Unknown": false,
+      "DaysOfWeek": "Wednesday"
+    },
+    {
+      "ProductId": "Powerball",
+      "DrawNumber": 1588,
+      "DrawDate": "2026-10-22T00:00:00",
+      "Div1Amount": 10000000.0,
+      "IsDiv1Unknown": false,
+      "DaysOfWeek": "Thursday"
+    },
+    {
+      "ProductId": "LuckyLotteries5",
+      "DrawNumber": 1790,
+      "DrawDate": "2026-10-22T00:00:00",
+      "Div1Amount": 1720003.0,
+      "IsDiv1Unknown": false,
+      "DaysOfWeek": "None"
+    },
+    {
+      "ProductId": "MondayWednesdayFridayLotto",
+      "DrawNumber": 4772,
+      "DrawDate": "2026-10-23T00:00:00",
+      "Div1Amount": 1000000.0,
+      "IsDiv1Unknown": false,
+      "DaysOfWeek": "Friday"
+    },
+    {
+      "ProductId": "TattsLotto",
+      "DrawNumber": 4723,
+      "DrawDate": "2026-10-24T00:00:00",
+      "Div1Amount": 6000000.0,
+      "IsDiv1Unknown": false,
+      "DaysOfWeek": "Saturday"
+    },
+    {
+      "ProductId": "Super66",
+      "DrawNumber": 4723,
+      "DrawDate": "2026-10-24T00:00:00",
+      "Div1Amount": 155000.0,
+      "IsDiv1Unknown": false,
+      "DaysOfWeek": "Saturday"
+    },
+    {
+      "ProductId": "MondayWednesdayFridayLotto",
+      "DrawNumber": 4773,
+      "DrawDate": "2026-10-26T00:00:00",
+      "Div1Amount": 1000000.0,
+      "IsDiv1Unknown": false,
+      "DaysOfWeek": "Monday"
+    },
+    {
+      "ProductId": "OzLotto",
+      "DrawNumber": 1706,
+      "DrawDate": "2026-10-27T00:00:00",
+      "Div1Amount": 1.0,
+      "IsDiv1Unknown": true,
+      "DaysOfWeek": "Tuesday"
+    },
+    {
+      "ProductId": "MondayWednesdayFridayLotto",
+      "DrawNumber": 4774,
+      "DrawDate": "2026-10-28T00:00:00",
+      "Div1Amount": 1000000.0,
+      "IsDiv1Unknown": false,
+      "DaysOfWeek": "Wednesday"
+    },
+    {
+      "ProductId": "Powerball",
+      "DrawNumber": 1589,
+      "DrawDate": "2026-10-29T00:00:00",
+      "Div1Amount": 1.0,
+      "IsDiv1Unknown": true,
+      "DaysOfWeek": "Thursday"
+    },
+    {
+      "ProductId": "MondayWednesdayFridayLotto",
+      "DrawNumber": 4775,
+      "DrawDate": "2026-10-30T00:00:00",
+      "Div1Amount": 1000000.0,
+      "IsDiv1Unknown": false,
+      "DaysOfWeek": "Friday"
+    },
+    {
+      "ProductId": "TattsLotto",
+      "DrawNumber": 4725,
+      "DrawDate": "2026-10-31T00:00:00",
+      "Div1Amount": 20000000.0,
+      "IsDiv1Unknown": false,
+      "DaysOfWeek": "Saturday"
+    },
+    {
+      "ProductId": "Super66",
+      "DrawNumber": 4725,
+      "DrawDate": "2026-10-31T00:00:00",
+      "Div1Amount": 1.0,
+      "IsDiv1Unknown": true,
+      "DaysOfWeek": "Saturday"
+    },
+    {
+      "ProductId": "MondayWednesdayFridayLotto",
+      "DrawNumber": 4776,
+      "DrawDate": "2026-11-02T00:00:00",
+      "Div1Amount": 1000000.0,
+      "IsDiv1Unknown": false,
+      "DaysOfWeek": "Monday"
+    },
+    {
+      "ProductId": "OzLotto",
+      "DrawNumber": 1707,
+      "DrawDate": "2026-11-03T00:00:00",
+      "Div1Amount": 1.0,
+      "IsDiv1Unknown": true,
+      "DaysOfWeek": "Tuesday"
+    },
+    {
+      "ProductId": "MondayWednesdayFridayLotto",
+      "DrawNumber": 4777,
+      "DrawDate": "2026-11-04T00:00:00",
+      "Div1Amount": 1000000.0,
+      "IsDiv1Unknown": false,
+      "DaysOfWeek": "Wednesday"
+    },
+    {
+      "ProductId": "Powerball",
+      "DrawNumber": 1590,
+      "DrawDate": "2026-11-05T00:00:00",
+      "Div1Amount": 1.0,
+      "IsDiv1Unknown": true,
+      "DaysOfWeek": "Thursday"
+    }
+  ]
+}
