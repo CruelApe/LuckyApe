@@ -14,7 +14,7 @@ import { SectionTitle } from '@/components/SectionTitle';
 import { useGame } from '@/hooks/useGame';
 import { describeRules, howToPlaySteps } from '@/lib';
 
-/** How to play, in numbers: built from the rules the scraper confirmed (or the built-in ones). */
+/** How to play, in numbers: built from the rules a scraper service confirmed (or the built-in ones). */
 export function RulesScreen({ slug }: { slug: string }) {
   const router = useRouter();
   const known = isGameSlug(slug);
@@ -40,7 +40,7 @@ export function RulesScreen({ slug }: { slug: string }) {
           {describeRules(rules)}
         </AppText>
         <AppText tone={confirmed ? 'positive' : 'muted'} className="mt-1 text-xs font-semibold">
-          {confirmed ? 'Rules confirmed against thelott.com' : 'Built-in rules — could not be confirmed online'}
+          {confirmed ? 'Rules confirmed against thelott.com' : 'Built-in rules — not re-checked against thelott.com'}
         </AppText>
       </GlassCard>
 

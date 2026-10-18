@@ -3,8 +3,8 @@ import { generateSampleSnapshot } from '@shared/sample';
 import type { GameSlug, GameSnapshot } from '@shared/types';
 
 /**
- * - `live`    – fresh from the data server.
- * - `cached`  – the server was unreachable; this is the last good copy from this device.
+ * - `live`    – fresh from The Lott (directly, or through a scraper service).
+ * - `cached`  – live data was unavailable; this is the last good copy from this device.
  * - `offline` – nothing else available; generated sample data (never real results).
  */
 export type SnapshotOrigin = 'live' | 'cached' | 'offline';
@@ -12,7 +12,7 @@ export type SnapshotOrigin = 'live' | 'cached' | 'offline';
 export interface LoadedGame {
   snapshot: GameSnapshot;
   origin: SnapshotOrigin;
-  /** Why the server could not be used, when it could not. */
+  /** Why live data could not be used, when it could not. */
   error: string | null;
 }
 
@@ -41,7 +41,7 @@ export async function loadGame(slug: GameSlug, deps: GameDataDeps): Promise<Load
     return { snapshot, origin: 'live', error: null };
   } catch (error) {
     reason = describe(error);
-    warn(`Data server unavailable for ${slug}: ${reason}`, error);
+    warn(`Live data unavailable for ${slug}: ${reason}`, error);
   }
 
   try {
