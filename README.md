@@ -46,7 +46,7 @@ Let’s be honest: lottery balls don’t have a memory, and no algorithm can pre
 - **Styling & UI**: Tailwind CSS via NativeWind v4 & Lucide React Native Icons
 - **State & Caching**: Zustand (theme, saved tickets) & TanStack Query (API fetching/caching)
 - **Data Persistence**: React Native Async Storage (saved tickets, offline snapshots)
-- **Backend / Web Scraper**: Node.js + Fastify service (`/server`) reading `thelott.com`
+- **Live data**: the app reads The Lott's public data API directly on the phone, using a polite, validated client shared with the server (`/shared`). An optional **Node.js + Fastify scraper service** (`/server`) can sit in between — see below
 - **Language**: TypeScript throughout; the statistical engine is pure, seedable and unit-tested
 
 ```
@@ -56,16 +56,18 @@ LuckyApe/
 │  ├─ screens/      SplashScreen, GameSelectorScreen, GeneratorScreen, AboutScreen, RulesScreen, SavedTicketsScreen
 │  ├─ components/   NumberBall, GameCard, TicketCard, AnalysisPanel, ThemeToggle, …
 │  ├─ lib/          Statistical engine: analysis, hot/cold/balanced/bounce, System entries (pure TS)
-│  ├─ services/     API client, offline cache, loadGame(), preload progress model
+│  ├─ services/     Direct-from-The-Lott source, optional server client, offline cache, loadGame(), preload progress model
 │  ├─ store/        Zustand stores (theme, saved tickets)
 │  └─ constants/    Theme tokens, per-game ball colours, mode descriptions
-├─ shared/          Types, built-in game rules and sample data — used by the app *and* the server
+├─ shared/          Types, built-in game rules, sample data and the Lott API / HTTP client — used by the app *and* the server
 ├─ server/          The scraper service (see below)
 ├─ eas.json         EAS Build profile (Android APK)
 └─ assets/          Logo (SVG source) and generated app icons
 ```
 
 ### How the data gets into the app
+
+The app does **not** need a server. An installed app asks The Lott's public data API directly, keeps the last good copy on the phone, and refreshes it incrementally. The optional scraper service below adds rules-page checking, your own CSV imports and a shared cache; the app prefers it when one is configured (it is the default in development) and falls back to The Lott directly if it is unreachable.
 
 ```
  thelott.com ──► server (Fastify) ──► GET /api/games/:slug ──► app ──► TanStack Query
@@ -78,6 +80,7 @@ LuckyApe/
 - **Results, jackpots and draw days** come from The Lott's public data API — the same `sales/vmax/web/data/lotto/…` endpoints the official site's own front end calls. History is collected in the small windows the API allows (≤ 50 draw numbers per request), then cached for 6 hours.
 - **Rules, system ranges and prize odds** are parsed from the server-rendered *How to play* pages, validated (e.g. Division 1 odds must equal C(pool, pick)), and merged over the built-in rules. If the site changes and a value no longer validates, the built-in value stays — a layout change can degrade the data but never corrupt the generator.
 - The scraper is deliberately polite: it identifies itself, spaces requests out, runs them one at a time, and backs off for 15 minutes if the site answers 401/403/429.
+- **Straight from the phone**: a saved snapshot younger than two hours costs no requests; a later refresh asks only for the newest draws (about 8 requests for all seven games); a first launch is about 22 requests, spaced 0.6 s apart. Rules are the built-in ones with the live draw days — only the scraper service re-reads the *How to play* pages, and the Rules screen says so.
 - **Fallbacks, in order of preference**: your own imported history (`server/data/imports`), live data, the last good copy on the phone, and finally **clearly labelled sample data** (generated, never presented as real results, and never shown in place of real data you already have).
 
 ---
@@ -99,7 +102,7 @@ The easiest way to get Lucky Ape on your phone is the APK attached to each [GitH
 
 **Uninstalling:** long-press the icon → **App info → Uninstall**.
 
-> **About live data.** The APK shows live results only if it was built with the address of a hosted scraper server (`EXPO_PUBLIC_API_URL`, see [Configuration](#configuration)). A build without one still works fully, but shows the last copy cached on the phone, then clearly labelled **sample data**. The release notes say which kind of build each APK is.
+> **Live data.** The APK reads live results straight from The Lott, so the phone needs an internet connection — no server and no setup. If it can't connect, it shows the last copy saved on the phone (labelled *Offline · saved …*), and only when nothing is saved, clearly labelled **sample data**.
 
 ### Build the APK yourself
 
@@ -111,7 +114,7 @@ npx eas-cli login
 npx eas-cli build --platform android --profile preview
 ```
 
-When the build finishes, EAS prints a download link and QR code for the `.apk`. To bake in your server address, add an `env` block to the `preview` profile in [`eas.json`](eas.json):
+When the build finishes, EAS prints a download link and QR code for the `.apk`. The app needs no server. If you run your own scraper service and want the app to prefer it (it still falls back to The Lott directly), add an `env` block to the `preview` profile in [`eas.json`](eas.json):
 
 ```json
 "preview": {
@@ -122,7 +125,7 @@ When the build finishes, EAS prints a download link and QR code for the `.apk`. 
 }
 ```
 
-The address must be **HTTPS** — Android blocks plain `http://` in release builds, so `http://192.168.x.x:8787` will not work.
+That address must be **HTTPS** — Android blocks plain `http://` in release builds, so `http://192.168.x.x:8787` will not work.
 
 ---
 
@@ -158,13 +161,13 @@ The app finds the server by itself in development: it uses the address of the ma
 
 > **Windows Firewall:** if a physical phone cannot reach the server, allow Node.js on *private networks* when Windows asks, or open port 8787.
 
-**No server? No problem.** Without one the app falls back to the copy cached on the device, and then to labelled sample data, so every screen still works.
+**No server? No problem.** Without one the app reads The Lott directly. If that fails it falls back to the copy cached on the device, and then to labelled sample data, so every screen still works.
 
 ### Configuration
 
 | What | Where | Notes |
 | --- | --- | --- |
-| Server URL for release builds | `EXPO_PUBLIC_API_URL` | e.g. `https://api.example.com`. Unset in a release build ⇒ offline/sample only. |
+| Optional scraper service URL | `EXPO_PUBLIC_API_URL` | e.g. `https://api.example.com` (HTTPS in release builds). Unset ⇒ the app reads The Lott directly. |
 | Server settings | `server/.env` (copy `server/.env.example`) | Port, cache TTL, history depth, source order, request pacing. |
 | Your own results | `server/data/imports/<game>.csv\|json` | See [`server/data/imports/README.md`](server/data/imports/README.md). Takes priority over live data. |
 
