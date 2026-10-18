@@ -1,0 +1,44 @@
+{
+  "Success": true,
+  "DrawResults": [
+    {
+      "ProductId": "LuckyLotteries2",
+      "DrawNumber": 11110,
+      "DrawDate": "2026-10-15T00:00:00",
+      "PrimaryNumbers": [
+        143807
+      ],
+      "SecondaryNumbers": [
+        185200,
+        149361,
+        90505
+      ]
+    },
+    {
+      "ProductId": "LuckyLotteries2",
+      "DrawNumber": 11109,
+      "DrawDate": "2026-10-12T00:00:00",
+      "PrimaryNumbers": [
+        231269
+      ],
+      "SecondaryNumbers": [
+        35320,
+        177901,
+        183413
+      ]
+    },
+    {
+      "ProductId": "LuckyLotteries2",
+      "DrawNumber": 11108,
+      "DrawDate": "2026-10-08T00:00:00",
+      "PrimaryNumbers": [
+        257194
+      ],
+      "SecondaryNumbers": [
+        230748,
+        44250,
+        191510
+      ]
+    }
+  ]
+}

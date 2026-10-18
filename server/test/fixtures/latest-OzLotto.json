@@ -1,0 +1,62 @@
+{
+  "Success": true,
+  "DrawResults": [
+    {
+      "ProductId": "OzLotto",
+      "DrawNumber": 1704,
+      "DrawDate": "2026-10-13T00:00:00",
+      "PrimaryNumbers": [
+        36,
+        46,
+        35,
+        5,
+        17,
+        29,
+        32
+      ],
+      "SecondaryNumbers": [
+        24,
+        7,
+        30
+      ]
+    },
+    {
+      "ProductId": "OzLotto",
+      "DrawNumber": 1703,
+      "DrawDate": "2026-10-06T00:00:00",
+      "PrimaryNumbers": [
+        40,
+        14,
+        41,
+        1,
+        38,
+        13,
+        25
+      ],
+      "SecondaryNumbers": [
+        47,
+        28,
+        30
+      ]
+    },
+    {
+      "ProductId": "OzLotto",
+      "DrawNumber": 1702,
+      "DrawDate": "2026-09-29T00:00:00",
+      "PrimaryNumbers": [
+        18,
+        35,
+        43,
+        41,
+        2,
+        45,
+        6
+      ],
+      "SecondaryNumbers": [
+        9,
+        3,
+        23
+      ]
+    }
+  ]
+}

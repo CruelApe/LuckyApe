@@ -1,0 +1,56 @@
+{
+  "Success": true,
+  "DrawResults": [
+    {
+      "ProductId": "MondayWednesdayFridayLotto",
+      "DrawNumber": 4769,
+      "DrawDate": "2026-10-16T00:00:00",
+      "PrimaryNumbers": [
+        1,
+        7,
+        24,
+        45,
+        14,
+        30
+      ],
+      "SecondaryNumbers": [
+        4,
+        40
+      ]
+    },
+    {
+      "ProductId": "MondayWednesdayFridayLotto",
+      "DrawNumber": 4768,
+      "DrawDate": "2026-10-14T00:00:00",
+      "PrimaryNumbers": [
+        28,
+        42,
+        35,
+        4,
+        40,
+        9
+      ],
+      "SecondaryNumbers": [
+        23,
+        26
+      ]
+    },
+    {
+      "ProductId": "MondayWednesdayFridayLotto",
+      "DrawNumber": 4767,
+      "DrawDate": "2026-10-12T00:00:00",
+      "PrimaryNumbers": [
+        12,
+        10,
+        1,
+        14,
+        39,
+        37
+      ],
+      "SecondaryNumbers": [
+        35,
+        45
+      ]
+    }
+  ]
+}
