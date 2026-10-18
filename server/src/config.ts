@@ -1,6 +1,8 @@
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 
+import { DEFAULT_THELOTT_API_BASE, DEFAULT_THELOTT_COMPANY } from '../../shared/thelott';
+
 export type SourceName = 'import' | 'thelott' | 'sample';
 
 export interface Config {
@@ -58,9 +60,9 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {
     host: env.HOST || '0.0.0.0',
     cacheTtlMs: int(env, 'CACHE_TTL_MINUTES', 360, 1, 7 * 24 * 60) * 60_000,
     historyDraws: int(env, 'HISTORY_DRAWS', 100, 10, 300),
-    thelottApiBase: (env.THELOTT_API_BASE || 'https://data.api.thelott.com').replace(/\/+$/, ''),
+    thelottApiBase: (env.THELOTT_API_BASE || DEFAULT_THELOTT_API_BASE).replace(/\/+$/, ''),
     thelottSiteBase: (env.THELOTT_SITE_BASE || 'https://www.thelott.com').replace(/\/+$/, ''),
-    thelottCompany: env.THELOTT_COMPANY || 'Tattersalls',
+    thelottCompany: env.THELOTT_COMPANY || DEFAULT_THELOTT_COMPANY,
     requestDelayMs: int(env, 'REQUEST_DELAY_MS', 600, 0, 10_000),
     requestTimeoutMs: int(env, 'REQUEST_TIMEOUT_MS', 20_000, 1_000, 120_000),
     userAgent:
