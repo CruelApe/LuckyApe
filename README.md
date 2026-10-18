@@ -61,6 +61,7 @@ LuckyApe/
 │  └─ constants/    Theme tokens, per-game ball colours, mode descriptions
 ├─ shared/          Types, built-in game rules and sample data — used by the app *and* the server
 ├─ server/          The scraper service (see below)
+├─ eas.json         EAS Build profile (Android APK)
 └─ assets/          Logo (SVG source) and generated app icons
 ```
 
@@ -78,6 +79,50 @@ LuckyApe/
 - **Rules, system ranges and prize odds** are parsed from the server-rendered *How to play* pages, validated (e.g. Division 1 odds must equal C(pool, pick)), and merged over the built-in rules. If the site changes and a value no longer validates, the built-in value stays — a layout change can degrade the data but never corrupt the generator.
 - The scraper is deliberately polite: it identifies itself, spaces requests out, runs them one at a time, and backs off for 15 minutes if the site answers 401/403/429.
 - **Fallbacks, in order of preference**: your own imported history (`server/data/imports`), live data, the last good copy on the phone, and finally **clearly labelled sample data** (generated, never presented as real results, and never shown in place of real data you already have).
+
+---
+
+## 📲 Install on Android (APK)
+
+The easiest way to get Lucky Ape on your phone is the APK attached to each [GitHub Release](https://github.com/CruelApe/LuckyApe/releases/latest). It is not on the Play Store, so Android will ask you to allow the install once.
+
+**You need:** an Android phone running **Android 7.0 or newer**.
+
+1. **Download the APK.** On your phone, open the [latest release](https://github.com/CruelApe/LuckyApe/releases/latest), scroll to **Assets** and tap the file ending in `.apk`. (Downloading on a computer and copying it to the phone works too.)
+2. **Open it.** Tap the downloaded file from the browser's download prompt, the notification, or your **Files / Downloads** app.
+3. **Allow the install.** The first time, Android says it can't install apps from this source. Tap **Settings**, switch on **Allow from this source** for your browser (or Files app), then press back.
+   - *Android 7.x:* the switch is **Settings → Security → Unknown sources** instead.
+4. **Install.** Tap **Install**. If **Google Play Protect** says the app is unrecognised, tap **More details → Install anyway** — that warning appears for any app that isn't from the Play Store.
+5. **Open Lucky Ape** from your app drawer. You can switch **Allow from this source** back off afterwards.
+
+**Updating:** download the newer APK and install it over the top. Your saved tickets stay on the phone.
+
+**Uninstalling:** long-press the icon → **App info → Uninstall**.
+
+> **About live data.** The APK shows live results only if it was built with the address of a hosted scraper server (`EXPO_PUBLIC_API_URL`, see [Configuration](#configuration)). A build without one still works fully, but shows the last copy cached on the phone, then clearly labelled **sample data**. The release notes say which kind of build each APK is.
+
+### Build the APK yourself
+
+You need a free [Expo](https://expo.dev) account. This builds in Expo's cloud, so you don't need Android Studio.
+
+```powershell
+npm install
+npx eas-cli login
+npx eas-cli build --platform android --profile preview
+```
+
+When the build finishes, EAS prints a download link and QR code for the `.apk`. To bake in your server address, add an `env` block to the `preview` profile in [`eas.json`](eas.json):
+
+```json
+"preview": {
+  "distribution": "internal",
+  "autoIncrement": true,
+  "android": { "buildType": "apk" },
+  "env": { "EXPO_PUBLIC_API_URL": "https://api.example.com" }
+}
+```
+
+The address must be **HTTPS** — Android blocks plain `http://` in release builds, so `http://192.168.x.x:8787` will not work.
 
 ---
 

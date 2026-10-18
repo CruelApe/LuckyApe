@@ -29,6 +29,6 @@ export const APP_INFO = {
   poweredBy: 'Powered by CruelApe Software',
   copyright: '© 2026 CruelApe Software. All Rights Reserved.',
   repoUrl: 'https://github.com/CruelApe/LuckyApe',
-  version: Constants.expoConfig?.version ?? '1.0.0',
+  version: Constants.expoConfig?.version ?? '1.0.1',
   gamblingHelp: { name: 'Gambling Help Online', phone: '1800 858 858', url: 'https://www.gamblinghelponline.org.au' },
 } as const;
