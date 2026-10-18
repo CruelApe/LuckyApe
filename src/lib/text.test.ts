@@ -111,7 +111,7 @@ describe('describeOrigin', () => {
     expect(info.detail).toMatch(/^10 draws · latest \w{3} \d+ \w{3} 2026$/);
   });
 
-  it('warns when the server itself fell back to sample data', () => {
+  it('warns when a snapshot itself is sample data', () => {
     const info = describeOrigin({ snapshot: snapshot({ source: 'sample' }), origin: 'live', error: null }, NOW);
     expect(info.tone).toBe('warning');
     expect(info.title).toBe('Sample data');
@@ -126,7 +126,9 @@ describe('describeOrigin', () => {
   it('is explicit when the app has only generated data', () => {
     const info = describeOrigin({ snapshot: snapshot({ source: 'sample' }), origin: 'offline', error: 'down' }, NOW);
     expect(info.tone).toBe('warning');
-    expect(info.detail).toMatch(/Start the scraper/);
+    expect(info.detail).toMatch(/Can't load live results/);
+    expect(info.detail).toMatch(/not real results/);
+    expect(info.detail).not.toMatch(/scraper|server/i);
   });
 
   it('uses lastDrawDate for games without draw history', () => {

@@ -22,14 +22,14 @@ export function describeOrigin(loaded: LoadedGame, now: Date = new Date()): Orig
     return {
       tone: 'warning',
       title: 'Sample data',
-      detail: `Can't reach the data server. ${SAMPLE_NOTE} Start the scraper (see the README) for real results.`,
+      detail: `Can't load live results right now. ${SAMPLE_NOTE} Check your internet connection and reopen the app.`,
     };
   }
   if (origin === 'cached') {
     return {
       tone: 'warning',
       title: `Offline · saved ${formatAge(snapshot.fetchedAt, now)}`,
-      detail: `${history}. Can't reach the data server, so this is the last copy kept on your device.`,
+      detail: `${history}. Can't reach The Lott, so this is the last copy kept on your device.`,
     };
   }
   switch (snapshot.source) {
@@ -41,7 +41,7 @@ export function describeOrigin(loaded: LoadedGame, now: Date = new Date()): Orig
       return {
         tone: 'warning',
         title: 'Sample data',
-        detail: `The data server couldn't reach The Lott. ${SAMPLE_NOTE}`,
+        detail: `Live results weren't available. ${SAMPLE_NOTE}`,
       };
   }
 }
