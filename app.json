@@ -2,7 +2,7 @@
   "expo": {
     "name": "Lucky Ape",
     "slug": "lucky-ape",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "luckyape",
@@ -40,6 +40,12 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "9d63fcba-56ff-4ec6-9c12-e57b5c5698f4"
+      }
+    },
+    "owner": "cruelape"
   }
 }
