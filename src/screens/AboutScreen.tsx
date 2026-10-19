@@ -8,6 +8,7 @@ import { Logo } from '@/components/Logo';
 import { Screen } from '@/components/Screen';
 import { ScreenHeader } from '@/components/ScreenHeader';
 import { useTheme } from '@/components/ThemeRoot';
+import { UpdateCard } from '@/components/UpdateCard';
 import { APP_INFO } from '@/constants/config';
 
 function Row({ label, value }: { label: string; value: string }) {
@@ -21,7 +22,7 @@ function Row({ label, value }: { label: string; value: string }) {
   );
 }
 
-/** Developer profile, branding, copyright and the legal disclaimer. */
+/** Developer profile, branding, update check, copyright and the legal disclaimer. */
 export function AboutScreen() {
   const router = useRouter();
   const { colors } = useTheme();
@@ -78,6 +79,8 @@ export function AboutScreen() {
           </View>
         </Pressable>
       </GlassCard>
+
+      <UpdateCard />
 
       <GlassCard className="mt-4 gap-2 p-4">
         <View className="flex-row items-center gap-2">
