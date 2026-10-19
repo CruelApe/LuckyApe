@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest';
 
 import { analyzeGame } from './analysis';
 import { parityBand } from './balanced';
-import { generateTickets, systemGameCount } from './generate';
+import { MAX_COMBINATIONS, generateTickets, systemGameCount } from './generate';
 import { isPickGame, type GeneratorMode, type PickGameRules } from './types';
 
 const NOW = new Date('2026-10-18T09:00:00Z');
@@ -67,6 +67,31 @@ describe.each(['hot', 'cold', 'balanced', 'bounce'] as const)('%s strategy', (mo
   it('produces distinct tickets within a batch', () => {
     const keys = make('tattslotto', mode, 40).map((t) => t.numbers.join('-'));
     expect(new Set(keys).size).toBe(keys.length);
+  });
+});
+
+describe('the combinations limit', () => {
+  it('matches the 50 games The Lott allows on one entry', () => {
+    expect(MAX_COMBINATIONS).toBe(50);
+  });
+
+  it.each(['tattslotto', 'weekday-windfall', 'oz-lotto', 'powerball'] as const)(
+    'fills a full %s entry with distinct combinations in every mode',
+    (slug) => {
+      for (const mode of ['hot', 'cold', 'balanced', 'bounce'] as const) {
+        const tickets = make(slug, mode, MAX_COMBINATIONS);
+        expect(tickets).toHaveLength(MAX_COMBINATIONS);
+        expect(new Set(tickets.map((t) => `${t.numbers.join('-')}|${t.powerball ?? ''}`)).size).toBe(MAX_COMBINATIONS);
+      }
+    },
+  );
+
+  it('fills a full entry of the largest System too', () => {
+    const { rules } = setup('powerball');
+    const tickets = make('powerball', 'system', MAX_COMBINATIONS, {
+      system: { size: rules.system!.max, basedOn: 'balanced', powerHit: false },
+    });
+    expect(tickets).toHaveLength(MAX_COMBINATIONS);
   });
 });
 
