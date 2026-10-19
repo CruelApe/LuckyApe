@@ -17,6 +17,9 @@ import { coldWeights, flatWeights, hotWeights } from './weights';
 const MAX_BALANCED_ATTEMPTS = 3000;
 const MAX_CARRY_SLOTS = 2;
 
+/** The most combinations (games) The Lott lets a player put on one entry. */
+export const MAX_COMBINATIONS = 50;
+
 function mainWeights(strategy: Strategy, analysis: GameAnalysis): number[] {
   switch (strategy) {
     case 'hot':
