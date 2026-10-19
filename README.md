@@ -28,6 +28,7 @@ Let’s be honest: lottery balls don’t have a memory, and no algorithm can pre
   - **Cold / Overdue Mode**: Inverse weighting targeting numbers that have been absent the longest.
   - **Balanced Model**: Enforces a typical odd-even split (e.g., 3:3 / 4:2), a historical sum range and no long runs.
   - **Supplementary Bounce**: Carries recent supplementary / Powerball numbers into the main set — and measures, honestly, how often those numbers really do reappear next to what chance alone would predict (so far: no meaningful difference).
+- **🎰 Up to 50 combinations per entry**: pick 1–50 games at a time, matching what The Lott allows on one entry, with one-tap shortcuts (1 · 5 · 10 · 25 · 50).
 - **⚡ System Entry Power**: Generate System entries across each game's official range (**7–20** for TattsLotto and Weekday Windfall, **8–20** for Oz Lotto and Powerball), including **PowerHit System** (8–15) for Powerball, with the exact number of games each entry covers.
 - **🎟️ Games with nothing to choose**: Lucky Lotteries (raffle) and Super 66 (QuickPick-only) allocate your numbers, so no model can help. Lucky Ape shows their results, rules and jackpots, and says so plainly instead of pretending.
 - **📖 In-App "How to Play" Guides**: Pick/pool, system ranges, prize divisions and odds — read from the official pages and checked against the generator's own rules.
@@ -36,7 +37,8 @@ Let’s be honest: lottery balls don’t have a memory, and no algorithm can pre
   - Fast splash screen with real-time preloading progress (it reflects actual work: fetching each game, then computing its probability distributions).
   - Interactive, game-branded ball visualizers with statistical rationale badges ("3 hot", "2 odd · 4 even", "Sum 138"…).
   - Seamless **Light ☀️ / Dark 🌙 Mode** switcher (or follow the device).
-  - Always tells you whether you're looking at **live**, **saved offline** or **sample** data.
+  - Always tells you whether you're looking at **live**, **saved offline** or **sample** data — with a `LIVE` / `SAVED` / `SAMPLE` badge on every game tile.
+- **🔔 Update checks**: Lucky Ape looks for a newer [GitHub Release](https://github.com/CruelApe/LuckyApe/releases/latest) each time it opens and shows a banner that downloads the new APK and opens Android's installer; **About → Check for updates** asks again on demand.
 
 ---
 
@@ -98,7 +100,7 @@ The easiest way to get Lucky Ape on your phone is the APK attached to each [GitH
 4. **Install.** Tap **Install**. If **Google Play Protect** says the app is unrecognised, tap **More details → Install anyway** — that warning appears for any app that isn't from the Play Store.
 5. **Open Lucky Ape** from your app drawer. You can switch **Allow from this source** back off afterwards.
 
-**Updating:** download the newer APK and install it over the top. Your saved tickets stay on the phone.
+**Updating:** Lucky Ape checks for a newer release when it opens and shows an **Update available** banner on the home screen. Tap **Update now**: the app downloads the new APK itself (with a progress bar) and opens Android's installer — you just tap **Install**. The first time, Android asks you to allow Lucky Ape to install updates (switch **Allow from this source** on, then press back). You can also check any time under **About → Check for updates**. Your saved tickets stay on the phone. Android never lets an app install silently, and it only accepts an update signed with the same key as the installed app. The check is one anonymous request to GitHub; if it can't be made the app simply carries on. Versions before the one that added this need the manual install above, once.
 
 **Uninstalling:** long-press the icon → **App info → Uninstall**.
 
