@@ -8,9 +8,11 @@ import { GAME_BRAND } from '@/constants/gameBrand';
 import { withAlpha } from '@/constants/theme';
 import { useGame } from '@/hooks/useGame';
 import { describeRules } from '@/lib';
+import { originBadge } from '@/services/origin';
 
 import { AppText } from './AppText';
 import { GlassCard } from './GlassCard';
+import { OriginBadge } from './OriginBadge';
 import { useTheme } from './ThemeRoot';
 
 interface GameCardProps {
@@ -30,13 +32,14 @@ export function GameCard({ slug, onOpen, onHowToPlay }: GameCardProps) {
   const rules = snapshot?.rules ?? BUILTIN_RULES[slug];
   const lastDraw = formatDate(snapshot?.lastDrawDate ?? snapshot?.draws[0]?.date ?? null);
   const jackpot = formatJackpot(snapshot?.jackpot ?? null);
-  const isSample = loaded !== undefined && (loaded.origin === 'offline' || loaded.snapshot.source === 'sample');
+  // Nothing to claim until the data has loaded: no badge is better than a wrong one.
+  const badge = loaded ? originBadge(loaded) : null;
 
   return (
     <GlassCard className="flex-1">
       <Pressable
         accessibilityRole="button"
-        accessibilityLabel={`${rules.name}. Last draw ${lastDraw}. Jackpot ${jackpot}. Opens the combination generator.`}
+        accessibilityLabel={`${rules.name}. ${badge ? `${badge.description}. ` : ''}Last draw ${lastDraw}. Jackpot ${jackpot}. Opens the combination generator.`}
         onPress={onOpen}
         className="gap-3 p-4 active:opacity-70"
       >
@@ -47,13 +50,7 @@ export function GameCard({ slug, onOpen, onHowToPlay }: GameCardProps) {
           >
             <Icon size={22} color={brand.accent} />
           </View>
-          {isSample && (
-            <View className="rounded-full bg-hot/15 px-2 py-0.5">
-              <AppText tone="hot" className="text-[10px] font-bold">
-                SAMPLE
-              </AppText>
-            </View>
-          )}
+          {badge && <OriginBadge info={badge} />}
         </View>
 
         <View className="min-h-[64px] gap-0.5">
