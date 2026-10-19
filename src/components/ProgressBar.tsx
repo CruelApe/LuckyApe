@@ -6,10 +6,12 @@ import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from '
 interface ProgressBarProps {
   /** 0–100 */
   value: number;
+  /** Spoken by screen readers. */
+  label?: string;
 }
 
 /** Animated determinate progress bar. */
-export function ProgressBar({ value }: ProgressBarProps) {
+export function ProgressBar({ value, label = 'Loading progress' }: ProgressBarProps) {
   const clamped = Math.max(0, Math.min(100, value));
   const progress = useSharedValue(0);
 
@@ -22,7 +24,7 @@ export function ProgressBar({ value }: ProgressBarProps) {
   return (
     <View
       accessibilityRole="progressbar"
-      accessibilityLabel="Loading progress"
+      accessibilityLabel={label}
       accessibilityValue={{ min: 0, max: 100, now: Math.round(clamped) }}
       className="h-3 w-full overflow-hidden rounded-full bg-surface-muted"
     >

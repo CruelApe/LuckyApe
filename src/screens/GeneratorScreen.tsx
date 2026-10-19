@@ -29,6 +29,7 @@ import {
   describeRules,
   generateTickets,
   isPickGame,
+  MAX_COMBINATIONS,
   systemGameCount,
   systemRangeFor,
   type GameAnalysis,
@@ -39,7 +40,10 @@ import {
 } from '@/lib';
 import { useTicketStore } from '@/store';
 
-const MAX_COMBINATIONS = 10;
+/** Quick picks for the Combinations stepper; 50 taps of "+" would be a chore. */
+const COMBINATION_PRESETS = [1, 5, 10, 25, MAX_COMBINATIONS] as const;
+/** Only the first few cards pop their balls in; fifty simultaneous entrance animations would stutter on a modest phone. */
+const ANIMATED_TICKETS = 10;
 const clamp = (value: number, min: number, max: number) => Math.max(min, Math.min(max, value));
 
 interface Options {
@@ -176,6 +180,8 @@ function PickGenerator({ rules, analysis, dataSource, slug, onOpenRules }: PickG
           min={1}
           max={MAX_COMBINATIONS}
           onChange={(count) => change({ count })}
+          hint={`1–${MAX_COMBINATIONS} allowed`}
+          presets={COMBINATION_PRESETS}
         />
         <Button label="Re-generate" icon={RefreshCw} onPress={regenerate} />
       </GlassCard>
@@ -192,7 +198,7 @@ function PickGenerator({ rules, analysis, dataSource, slug, onOpenRules }: PickG
               ticket={ticket}
               index={i + 1}
               gameName={rules.name}
-              animate
+              animate={i < ANIMATED_TICKETS}
               saved={savedIds.has(ticket.id)}
               onToggleSave={() => (savedIds.has(ticket.id) ? removeTicket(ticket.id) : saveTicket(ticket))}
             />

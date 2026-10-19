@@ -1,6 +1,7 @@
 export { analyzeGame, type AnalysisOptions } from './analysis';
 export { buildBadges } from './badges';
 export {
+  MAX_COMBINATIONS,
   generateTickets,
   pickMainNumbers,
   pickPowerball,
