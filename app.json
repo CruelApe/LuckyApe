@@ -2,7 +2,7 @@
   "expo": {
     "name": "Lucky Ape",
     "slug": "lucky-ape",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "luckyape",
@@ -14,6 +14,7 @@
     },
     "android": {
       "package": "software.cruelape.luckyape",
+      "permissions": ["android.permission.REQUEST_INSTALL_PACKAGES"],
       "adaptiveIcon": {
         "backgroundColor": "#0F172A",
         "foregroundImage": "./assets/images/android-icon-foreground.png",

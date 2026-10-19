@@ -9,6 +9,27 @@ export interface OriginInfo {
   detail: string;
 }
 
+export interface OriginBadgeInfo {
+  kind: 'live' | 'imported' | 'saved' | 'sample';
+  /** Short, upper-case text for the pill. */
+  label: string;
+  /** Spoken by screen readers, and fit for a sentence. */
+  description: string;
+}
+
+/**
+ * The at-a-glance version of `describeOrigin`, for a game's tile. Sample data wins over everything
+ * so generated numbers can never wear a "live" badge, and a copy kept on the device is called what it is.
+ */
+export function originBadge({ snapshot, origin }: LoadedGame): OriginBadgeInfo {
+  if (origin === 'offline' || snapshot.source === 'sample') {
+    return { kind: 'sample', label: 'SAMPLE', description: 'Sample data, not real results' };
+  }
+  if (origin === 'cached') return { kind: 'saved', label: 'SAVED', description: 'Saved offline data' };
+  if (snapshot.source === 'import') return { kind: 'imported', label: 'IMPORTED', description: 'Imported data' };
+  return { kind: 'live', label: 'LIVE', description: 'Live data' };
+}
+
 const SAMPLE_NOTE = 'These draws are generated for illustration — they are not real results.';
 
 /** Tells the user, honestly, what the numbers on screen are based on. */

@@ -11,6 +11,7 @@ import { Logo } from '@/components/Logo';
 import { Screen } from '@/components/Screen';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { useTheme } from '@/components/ThemeRoot';
+import { UpdateBanner } from '@/components/UpdateBanner';
 import { queryClient } from '@/services/queryClient';
 import { useTicketStore } from '@/store';
 
@@ -65,6 +66,7 @@ export function GameSelectorScreen() {
         </View>
       }
     >
+      <UpdateBanner />
       <View style={{ gap: GAP }}>
         {chunk(GAME_SLUGS, columns).map((row) => (
           <View key={row[0]} className="flex-row items-stretch" style={{ gap: GAP }}>

@@ -1,6 +1,6 @@
 {
   "name": "lucky-ape",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Lucky Ape — Smart Probability, Bananas Results. Statistical lottery combination generator for The Lott Australia games.",
   "main": "expo-router/entry",
   "private": true,
@@ -31,8 +31,10 @@
     "expo": "~58.0.14",
     "expo-blur": "~58.0.4",
     "expo-constants": "~58.0.12",
+    "expo-file-system": "~58.0.9",
     "expo-font": "~58.0.8",
     "expo-haptics": "~58.0.7",
+    "expo-intent-launcher": "~58.0.3",
     "expo-linear-gradient": "~58.0.3",
     "expo-linking": "~58.0.13",
     "expo-router": "~58.0.23",
