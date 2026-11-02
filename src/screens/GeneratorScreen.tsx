@@ -1,6 +1,6 @@
 import { formatDate, formatInt } from '@shared/format';
 import { BUILTIN_RULES } from '@shared/games';
-import type { DataSource, GameSlug } from '@shared/types';
+import type { DataSource, Draw, GameSlug } from '@shared/types';
 import * as Haptics from 'expo-haptics';
 import { useRouter } from 'expo-router';
 import { BookOpen, Dices, RefreshCw } from 'lucide-react-native';
@@ -12,10 +12,12 @@ import { AppText } from '@/components/AppText';
 import { BallRow } from '@/components/BallRow';
 import { Button } from '@/components/Button';
 import { Chip } from '@/components/Chip';
+import { CollapsibleSection } from '@/components/CollapsibleSection';
 import { DataOriginBanner } from '@/components/DataOriginBanner';
 import { Disclaimer } from '@/components/Disclaimer';
 import { GlassCard } from '@/components/GlassCard';
 import { IconButton } from '@/components/IconButton';
+import { LastDrawCard } from '@/components/LastDrawCard';
 import { ModeSelector } from '@/components/ModeSelector';
 import { Screen } from '@/components/Screen';
 import { ScreenHeader } from '@/components/ScreenHeader';
@@ -25,6 +27,7 @@ import { TicketCard } from '@/components/TicketCard';
 import { useTheme } from '@/components/ThemeRoot';
 import { STRATEGIES } from '@/constants/modes';
 import { useGame } from '@/hooks/useGame';
+import { originBadge } from '@/services/origin';
 import {
   describeRules,
   generateTickets,
@@ -95,15 +98,19 @@ interface PickGeneratorProps {
   analysis: GameAnalysis;
   dataSource: DataSource;
   slug: GameSlug;
+  /** The newest draw in the history (draws are newest first), or null when there is none. */
+  lastDraw: Draw | null;
+  /** The draws on screen are generated, not real. */
+  isSample: boolean;
   onOpenRules: () => void;
 }
 
 /**
- * The analysis dashboard and generator for a game where the player chooses numbers. Combinations are
- * (re)generated from event handlers, never from effects; the parent remounts this component when
- * fresh data arrives, which produces a new first set.
+ * The collapsible analysis, the last draw result and the generator for a game where the player chooses
+ * numbers. Combinations are (re)generated from event handlers, never from effects; the parent remounts
+ * this component when fresh data arrives, which produces a new first set.
  */
-function PickGenerator({ rules, analysis, dataSource, slug, onOpenRules }: PickGeneratorProps) {
+function PickGenerator({ rules, analysis, dataSource, slug, lastDraw, isSample, onOpenRules }: PickGeneratorProps) {
   const { colors } = useTheme();
   const savedTickets = useTicketStore((s) => s.tickets);
   const saveTicket = useTicketStore((s) => s.save);
@@ -130,8 +137,15 @@ function PickGenerator({ rules, analysis, dataSource, slug, onOpenRules }: PickG
 
   return (
     <>
-      <SectionTitle>Instant analysis</SectionTitle>
-      <AnalysisPanel slug={slug} analysis={analysis} />
+      <CollapsibleSection
+        title="Instant analysis"
+        summary={analysis.drawCount > 0 ? `Based on ${analysis.drawCount} draws · tap to expand` : 'No draw history yet'}
+      >
+        <AnalysisPanel slug={slug} analysis={analysis} />
+      </CollapsibleSection>
+
+      <SectionTitle>Last draw result</SectionTitle>
+      <LastDrawCard slug={slug} draw={lastDraw} isSample={isSample} />
 
       <SectionTitle>Generator</SectionTitle>
       <ModeSelector value={options.mode} onChange={(mode) => change({ mode })} available={availableModes} />
@@ -254,6 +268,8 @@ export function GeneratorScreen({ slug }: { slug: GameSlug }) {
               analysis={analysis}
               dataSource={snapshot.source}
               slug={slug}
+              lastDraw={snapshot.draws[0] ?? null}
+              isSample={originBadge(loaded).kind === 'sample'}
               onOpenRules={openRules}
             />
           ) : (
