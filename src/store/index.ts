@@ -1,9 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useSyncExternalStore } from 'react';
 
+import { createAlertStore } from './alerts';
 import { createThemeStore } from './theme';
 import { createTicketStore } from './tickets';
 
+export const useAlertStore = createAlertStore(AsyncStorage);
 export const useThemeStore = createThemeStore(AsyncStorage);
 export const useTicketStore = createTicketStore(AsyncStorage);
 

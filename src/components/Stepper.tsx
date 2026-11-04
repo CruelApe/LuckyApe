@@ -16,12 +16,16 @@ interface StepperProps {
   hint?: string;
   /** Shortcuts to jump straight to a value, for ranges too long to tap through one step at a time. */
   presets?: readonly number[];
+  /** How much − and + change the value by. Defaults to 1. */
+  step?: number;
+  /** How a value is shown (e.g. "$50M"), on the control and its shortcuts. Defaults to the plain number. */
+  format?: (value: number) => string;
 }
 
 /** A labelled −/+ control with clamped bounds and spoken value. */
-export function Stepper({ label, value, min, max, onChange, hint, presets }: StepperProps) {
+export function Stepper({ label, value, min, max, onChange, hint, presets, step = 1, format = String }: StepperProps) {
   const { colors } = useTheme();
-  const step = (delta: number) => onChange(Math.max(min, Math.min(max, value + delta)));
+  const move = (direction: -1 | 1) => onChange(Math.max(min, Math.min(max, value + direction * step)));
   const button = (delta: -1 | 1, disabled: boolean) => {
     const Icon = delta < 0 ? Minus : Plus;
     return (
@@ -30,7 +34,7 @@ export function Stepper({ label, value, min, max, onChange, hint, presets }: Ste
         accessibilityLabel={`${delta < 0 ? 'Decrease' : 'Increase'} ${label}`}
         accessibilityState={{ disabled }}
         disabled={disabled}
-        onPress={() => step(delta)}
+        onPress={() => move(delta)}
         className={cn(
           'h-11 w-11 items-center justify-center rounded-full border border-border bg-surface/80 active:opacity-60',
           disabled && 'opacity-35',
@@ -58,10 +62,10 @@ export function Stepper({ label, value, min, max, onChange, hint, presets }: Ste
           {button(-1, value <= min)}
           <AppText
             accessibilityRole="adjustable"
-            accessibilityValue={{ min, max, now: value }}
+            accessibilityValue={{ min, max, now: value, text: format(value) }}
             className="min-w-8 text-center text-xl font-extrabold"
           >
-            {value}
+            {format(value)}
           </AppText>
           {button(1, value >= max)}
         </View>
@@ -69,7 +73,7 @@ export function Stepper({ label, value, min, max, onChange, hint, presets }: Ste
       {shortcuts.length > 0 && (
         <View className="flex-row flex-wrap gap-2" accessibilityRole="radiogroup" accessibilityLabel={`${label} shortcuts`}>
           {shortcuts.map((preset) => (
-            <Chip key={preset} label={String(preset)} selected={value === preset} onPress={() => onChange(preset)} />
+            <Chip key={preset} label={format(preset)} selected={value === preset} onPress={() => onChange(preset)} />
           ))}
         </View>
       )}

@@ -2,7 +2,7 @@
   "expo": {
     "name": "Lucky Ape",
     "slug": "lucky-ape",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "luckyape",
@@ -40,7 +40,16 @@
         }
       ],
       "expo-status-bar",
-      "expo-web-browser"
+      "expo-web-browser",
+      "expo-background-task",
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/images/android-icon-monochrome.png",
+          "color": "#FBBF24",
+          "enableRemoteNotifications": false
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,

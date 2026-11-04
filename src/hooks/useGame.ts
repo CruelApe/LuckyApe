@@ -3,9 +3,10 @@ import { useQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
 
 import { analysisFor } from '@/services/analysisCache';
+import { gameQueryKey } from '@/services/queryKeys';
 import { loadGameRuntime } from '@/services/runtime';
 
-export const gameQueryKey = (slug: GameSlug) => ['game', slug] as const;
+export { gameQueryKey };
 
 /** A game's snapshot (live → cached → sample) with its probability analysis. */
 export function useGame(slug: GameSlug) {

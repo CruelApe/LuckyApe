@@ -1,6 +1,6 @@
 import { GAME_SLUGS, type GameSlug } from '@shared/types';
 import { useRouter } from 'expo-router';
-import { Info, Library } from 'lucide-react-native';
+import { Info, Library, Settings } from 'lucide-react-native';
 import { useState } from 'react';
 import { RefreshControl, View, useWindowDimensions } from 'react-native';
 
@@ -9,7 +9,6 @@ import { GameCard } from '@/components/GameCard';
 import { IconButton } from '@/components/IconButton';
 import { Logo } from '@/components/Logo';
 import { Screen } from '@/components/Screen';
-import { ThemeToggle } from '@/components/ThemeToggle';
 import { useTheme } from '@/components/ThemeRoot';
 import { UpdateBanner } from '@/components/UpdateBanner';
 import { queryClient } from '@/services/queryClient';
@@ -20,7 +19,7 @@ const GAP = 12;
 const chunk = <T,>(items: readonly T[], size: number): T[][] =>
   Array.from({ length: Math.ceil(items.length / size) }, (_, i) => items.slice(i * size, i * size + size));
 
-/** Home: every supported game as a card, with the Light/Dark toggle, saved tickets and About in the header. */
+/** Home: every supported game as a card, with saved tickets, About and Settings (theme, alerts) in the header. */
 export function GameSelectorScreen() {
   const router = useRouter();
   const { colors } = useTheme();
@@ -58,10 +57,11 @@ export function GameSelectorScreen() {
               </AppText>
             </View>
           </View>
-          <View className="flex-row items-center gap-2">
-            <ThemeToggle />
+          {/* `ml-auto` keeps the buttons on the right if a very narrow screen drops them to a second line. */}
+          <View className="ml-auto flex-row items-center gap-2">
             <IconButton icon={Library} label="Saved tickets" badge={savedCount} onPress={() => router.push('/saved')} />
             <IconButton icon={Info} label="About Lucky Ape" onPress={() => router.push('/about')} />
+            <IconButton icon={Settings} label="Settings" onPress={() => router.push('/settings')} />
           </View>
         </View>
       }

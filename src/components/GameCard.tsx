@@ -21,7 +21,14 @@ interface GameCardProps {
   onHowToPlay: () => void;
 }
 
-/** One tile on the game selector: branding, last draw, jackpot, and a "How to Play" shortcut. */
+/**
+ * One tile on the game selector: branding, last draw, jackpot, and a "How to Play" shortcut.
+ *
+ * The card fills its (stretched) grid cell with `grow` rather than `flex-1`: `flex-1` means a flex basis of
+ * zero, and a zero basis inside an auto-height column lets Yoga size the card to nothing but its border
+ * whenever the scroll content is re-laid out (e.g. when the update banner appears above the grid).
+ * `grow` keeps the content height as the basis, so the card can only ever get taller than its content.
+ */
 export function GameCard({ slug, onOpen, onHowToPlay }: GameCardProps) {
   const { colors } = useTheme();
   const brand = GAME_BRAND[slug];
@@ -36,7 +43,7 @@ export function GameCard({ slug, onOpen, onHowToPlay }: GameCardProps) {
   const badge = loaded ? originBadge(loaded) : null;
 
   return (
-    <GlassCard className="flex-1">
+    <GlassCard className="grow">
       <Pressable
         accessibilityRole="button"
         accessibilityLabel={`${rules.name}. ${badge ? `${badge.description}. ` : ''}Last draw ${lastDraw}. Jackpot ${jackpot}. Opens the combination generator.`}
