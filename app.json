@@ -2,7 +2,7 @@
   "expo": {
     "name": "Lucky Ape",
     "slug": "lucky-ape",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "luckyape",
@@ -48,6 +48,14 @@
           "icon": "./assets/images/android-icon-monochrome.png",
           "color": "#FBBF24",
           "enableRemoteNotifications": false
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "extraProguardRules": "# WorkManager (added by expo-background-task) opens its Room database by looking up the generated class's no-argument constructor at app start. R8 removed it in release builds, so the app crashed on launch with NoSuchMethodException: androidx.work.impl.WorkDatabase_Impl.<init>.\n-keep class * extends androidx.room.RoomDatabase { <init>(); }"
+          }
         }
       ]
     ],
