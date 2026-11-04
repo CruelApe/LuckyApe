@@ -35,7 +35,7 @@ export interface UpdateCheckOptions {
   fetchImpl?: typeof fetch;
 }
 
-type Version = readonly [major: number, minor: number, patch: number];
+export type Version = readonly [major: number, minor: number, patch: number];
 
 /** "v1.2.3", "1.2" and "1.2.3-beta" all parse; anything that does not start with a number does not. */
 export function parseVersion(text: string): Version | null {
@@ -43,10 +43,10 @@ export function parseVersion(text: string): Version | null {
   return match ? [Number(match[1]), Number(match[2] ?? 0), Number(match[3] ?? 0)] : null;
 }
 
-const formatVersion = (version: Version) => version.join('.');
+export const formatVersion = (version: Version) => version.join('.');
 
 /** Positive when `a` is newer than `b`. */
-function compareVersions(a: Version, b: Version): number {
+export function compareVersions(a: Version, b: Version): number {
   for (let i = 0; i < a.length; i++) {
     if (a[i] !== b[i]) return a[i] - b[i];
   }

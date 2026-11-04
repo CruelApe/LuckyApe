@@ -36,9 +36,10 @@ Let’s be honest: lottery balls don’t have a memory, and no algorithm can pre
 - **🎨 Sleek Modern UI**:
   - Fast splash screen with real-time preloading progress (it reflects actual work: fetching each game, then computing its probability distributions).
   - Interactive, game-branded ball visualizers with statistical rationale badges ("3 hot", "2 odd · 4 even", "Sum 138"…).
-  - Seamless **Light ☀️ / Dark 🌙 Mode** switcher (or follow the device).
+  - **Light ☀️ / Dark 🌙 / System** theme selector under **Settings → Appearance** (System follows your phone).
   - Always tells you whether you're looking at **live**, **saved offline** or **sample** data — with a `LIVE` / `SAVED` / `SAMPLE` badge on every game tile.
 - **🔔 Update checks**: Lucky Ape looks for a newer [GitHub Release](https://github.com/CruelApe/LuckyApe/releases/latest) each time it opens and shows a banner that downloads the new APK and opens Android's installer; **About → Check for updates** asks again on demand.
+- **💰 Jackpot alerts**: turn them on under **Settings** (the gear ⚙️ in the home screen's header, next to saved tickets and About) and pick a minimum jackpot, from **Any** (every jackpot) up to $200M. When any game's jackpot is at or above it (a $10M minimum alerts at $10M and over), Lucky Ape shows a notification — once per jackpot, and again if it is won and builds back up — and tapping it opens that game. These are local notifications, not server push: the app checks whenever it loads fresh results, and the phone also runs a best-effort background check roughly hourly (Android and iOS decide when, so it is not a guaranteed schedule). Only live results trigger an alert, never saved or sample data.
 
 ---
 
@@ -56,7 +57,7 @@ LuckyApe/
 ├─ src/
 │  ├─ app/          Expo Router routes (thin wrappers around screens)
 │  ├─ screens/      SplashScreen, GameSelectorScreen, GeneratorScreen, AboutScreen, RulesScreen, SavedTicketsScreen
-│  ├─ components/   NumberBall, GameCard, TicketCard, AnalysisPanel, ThemeToggle, …
+│  ├─ components/   NumberBall, GameCard, TicketCard, AnalysisPanel, ThemeSelector, …
 │  ├─ lib/          Statistical engine: analysis, hot/cold/balanced/bounce, System entries (pure TS)
 │  ├─ services/     Direct-from-The-Lott source, optional server client, offline cache, loadGame(), preload progress model
 │  ├─ store/        Zustand stores (theme, saved tickets)
@@ -165,11 +166,25 @@ The app finds the server by itself in development: it uses the address of the ma
 
 **No server? No problem.** Without one the app reads The Lott directly. If that fails it falls back to the copy cached on the device, and then to labelled sample data, so every screen still works.
 
+### Try the update banner and jackpot alerts locally
+
+**Update banner.** The banner only shows when GitHub has a release newer than the running app, which is never true while you develop. Ask the app to pretend one exists (development builds only; a release build ignores this):
+
+```powershell
+$env:EXPO_PUBLIC_SIMULATE_UPDATE = "1"      # "1" = one patch above the running version; or a version such as "2.0.0"
+npx expo start --clear                      # --clear is needed: Expo bakes EXPO_PUBLIC_* values into the bundle
+```
+
+Or put `EXPO_PUBLIC_SIMULATE_UPDATE=1` in a git-ignored `.env.local` and restart with `--clear`. About 1.5 seconds after the home screen appears, the **Update available · v1.0.7** card slides in above the games, the same moment a real one would (and **About → Check for updates** shows it too). **Later** hides it; the games must stay visible either way. The pretend update has no APK, so the button says **Download** and opens the releases page: nothing is downloaded or installed. Remove the variable (`Remove-Item Env:EXPO_PUBLIC_SIMULATE_UPDATE`) and restart with `--clear` to go back to the real check.
+
+**Jackpot alerts.** Tap the gear ⚙️ in the home screen's header to open **Settings**, switch **Jackpot alerts** on, allow notifications, and set the minimum to **Any**: every game with a published jackpot alerts within a couple of seconds, with no need to wait for a big one. Tap the notification to jump into that game. Switch alerts off and on again to re-arm them (or raise the minimum above the jackpot, wait a couple of seconds, then lower it again). To see it arrive the way a real one will, tap **Send a test notification** on the same screen, then leave the app or lock the phone: about 10 seconds later it appears in the phone's notification shade (and on the lock screen), and tapping it opens Powerball. Expo Go is enough to see the notifications and try the settings (it logs a warning that Expo Go is limited), but it has no background check; for that, use a [development build](https://docs.expo.dev/develop/development-builds/introduction/) or the APK.
+
 ### Configuration
 
 | What | Where | Notes |
 | --- | --- | --- |
 | Optional scraper service URL | `EXPO_PUBLIC_API_URL` | e.g. `https://api.example.com` (HTTPS in release builds). Unset ⇒ the app reads The Lott directly. |
+| Pretend an update exists | `EXPO_PUBLIC_SIMULATE_UPDATE` | Development builds only. `1` or a version like `2.0.0`; see above. Unset ⇒ the real GitHub check. |
 | Server settings | `server/.env` (copy `server/.env.example`) | Port, cache TTL, history depth, source order, request pacing. |
 | Your own results | `server/data/imports/<game>.csv\|json` | See [`server/data/imports/README.md`](server/data/imports/README.md). Takes priority over live data. |
 

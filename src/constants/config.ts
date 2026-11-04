@@ -32,6 +32,6 @@ export const APP_INFO = {
   repoUrl: 'https://github.com/CruelApe/LuckyApe',
   /** Where new versions are announced: the newest published GitHub release, whose APK is what gets installed. */
   latestReleaseApiUrl: 'https://api.github.com/repos/CruelApe/LuckyApe/releases/latest',
-  version: Constants.expoConfig?.version ?? '1.0.5',
+  version: Constants.expoConfig?.version ?? '1.0.6',
   gamblingHelp: { name: 'Gambling Help Online', phone: '1800 858 858', url: 'https://www.gamblinghelponline.org.au' },
 } as const;

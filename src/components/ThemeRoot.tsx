@@ -26,7 +26,7 @@ export function useTheme(): ThemeValue {
 }
 
 /**
- * Owns the Light / Dark switch. The store's `mode` drives NativeWind's colour scheme, and the
+ * Owns the Light / Dark / System choice. The store's `mode` drives NativeWind's colour scheme, and the
  * resolved scheme's colour tokens are injected as CSS variables, so every `bg-surface`,
  * `text-fg`, ... class below this point follows the toggle.
  */

@@ -3,6 +3,9 @@ import type { StateStorage } from 'zustand/middleware';
 
 import type { GeneratedTicket } from '@/lib';
 
+import { DEFAULT_THRESHOLD_MILLIONS, MAX_THRESHOLD_MILLIONS, MIN_THRESHOLD_MILLIONS } from '@/services/jackpotAlerts';
+
+import { createAlertStore } from './alerts';
 import { createThemeStore } from './theme';
 import { MAX_SAVED_TICKETS, createTicketStore } from './tickets';
 
@@ -42,6 +45,26 @@ describe('theme store', () => {
     expect(store.getState().mode).toBe('light');
     store.getState().toggle('light');
     expect(store.getState().mode).toBe('dark');
+  });
+
+  it('is on System on a first install, before and after loading from empty storage', async () => {
+    const store = createThemeStore(memoryStorage());
+    expect(store.getState().mode).toBe('system');
+    await store.persist.rehydrate();
+    expect(store.getState().mode).toBe('system');
+  });
+
+  it('lets the user pick Light, Dark or System, and remembers it', async () => {
+    const storage = memoryStorage();
+    const store = createThemeStore(storage);
+    for (const mode of ['light', 'dark', 'system'] as const) {
+      store.getState().setMode(mode);
+      expect(store.getState().mode).toBe(mode);
+
+      const restored = createThemeStore(storage);
+      await restored.persist.rehydrate();
+      expect(restored.getState().mode).toBe(mode);
+    }
   });
 
   it('persists the choice and restores it', async () => {
@@ -118,5 +141,87 @@ describe('ticket store', () => {
     const store = createTicketStore(storage, fixedNow);
     await store.persist.rehydrate();
     expect(store.getState().tickets).toEqual([]);
+  });
+});
+
+describe('alert store', () => {
+  it('starts off, at the default amount', () => {
+    const state = createAlertStore(memoryStorage()).getState();
+    expect(state.enabled).toBe(false);
+    expect(state.thresholdMillions).toBe(DEFAULT_THRESHOLD_MILLIONS);
+    expect(state.alerted).toEqual({});
+  });
+
+  it('keeps the amount inside the allowed range', () => {
+    const store = createAlertStore(memoryStorage());
+    store.getState().setThreshold(75);
+    expect(store.getState().thresholdMillions).toBe(75);
+    store.getState().setThreshold(0);
+    expect(store.getState().thresholdMillions).toBe(0); // "any jackpot"
+    store.getState().setThreshold(-3);
+    expect(store.getState().thresholdMillions).toBe(MIN_THRESHOLD_MILLIONS);
+    store.getState().setThreshold(10_000);
+    expect(store.getState().thresholdMillions).toBe(MAX_THRESHOLD_MILLIONS);
+  });
+
+  it('persists the settings and what has been alerted, and restores them', async () => {
+    const storage = memoryStorage();
+    const store = createAlertStore(storage);
+    store.getState().setEnabled(true);
+    store.getState().setThreshold(30);
+    store.getState().saveAlerted({ powerball: 62_000_000 });
+
+    const restored = createAlertStore(storage);
+    await restored.persist.rehydrate();
+    expect(restored.getState().enabled).toBe(true);
+    expect(restored.getState().thresholdMillions).toBe(30);
+    expect(restored.getState().alerted).toEqual({ powerball: 62_000_000 });
+  });
+
+  it('ignores corrupt stored values', async () => {
+    const storage = memoryStorage({
+      'luckyape:alerts': JSON.stringify({
+        state: { enabled: 'yes', thresholdMillions: 'lots', alerted: { powerball: 'big', nonsense: 5, 'oz-lotto': 40_000_000 } },
+        version: 1,
+      }),
+    });
+    const store = createAlertStore(storage);
+    await store.persist.rehydrate();
+    expect(store.getState().enabled).toBe(false);
+    expect(store.getState().thresholdMillions).toBe(DEFAULT_THRESHOLD_MILLIONS);
+    expect(store.getState().alerted).toEqual({ 'oz-lotto': 40_000_000 });
+  });
+
+  it('clamps a stored amount that is out of range', async () => {
+    const storage = memoryStorage({
+      'luckyape:alerts': JSON.stringify({ state: { enabled: true, thresholdMillions: 5_000, alerted: [] }, version: 1 }),
+    });
+    const store = createAlertStore(storage);
+    await store.persist.rehydrate();
+    expect(store.getState().enabled).toBe(true);
+    expect(store.getState().thresholdMillions).toBe(MAX_THRESHOLD_MILLIONS);
+    expect(store.getState().alerted).toEqual({});
+  });
+});
+
+describe('alert store re-arming', () => {
+  it('forgets what was alerted when alerts are switched on or off', () => {
+    const store = createAlertStore(memoryStorage());
+    store.getState().setEnabled(true);
+    store.getState().saveAlerted({ powerball: 62_000_000 });
+
+    store.getState().setEnabled(false);
+    expect(store.getState().alerted).toEqual({});
+
+    store.getState().saveAlerted({ 'oz-lotto': 40_000_000 });
+    store.getState().setEnabled(true);
+    expect(store.getState().alerted).toEqual({});
+  });
+
+  it('keeps what was alerted when only the amount changes', () => {
+    const store = createAlertStore(memoryStorage());
+    store.getState().saveAlerted({ powerball: 62_000_000 });
+    store.getState().setThreshold(20);
+    expect(store.getState().alerted).toEqual({ powerball: 62_000_000 });
   });
 });
